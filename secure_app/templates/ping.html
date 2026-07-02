@@ -9,12 +9,12 @@
         :root {
             --bg-dark: #050608;
             --bg-sidebar: #0a0d10;
-            --bg-panel: rgba(10, 15, 12, 0.45);
-            --border-neon: rgba(0, 230, 118, 0.2);
-            --text-main: #f8fafc;
+            --bg-panel: rgba(20, 20, 20, 0.45);
+            --border-neon: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
             --text-muted: #94a3b8;
-            --emerald: #00e676;
-            --emerald-glow: rgba(0, 230, 118, 0.15);
+            --accent: #ffffff;
+            --glow: rgba(255, 255, 255, 0.1);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -47,7 +47,7 @@
             font-size: 1.25rem;
             font-weight: 700;
             letter-spacing: -0.01em;
-            background: linear-gradient(135deg, #fff 0%, var(--emerald) 100%);
+            background: linear-gradient(135deg, #fff 0%, #7f8c8d 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -71,8 +71,8 @@
             transition: all 0.3s ease;
         }
         .menu-item a:hover, .menu-item.active a {
-            color: var(--emerald);
-            background: rgba(0, 230, 118, 0.05);
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
         }
         .sidebar-footer {
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -90,9 +90,9 @@
             color: var(--text-main);
         }
         .user-badge {
-            background: rgba(0, 230, 118, 0.08);
-            border: 1px solid rgba(0, 230, 118, 0.2);
-            color: var(--emerald);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--accent);
             padding: 2px 8px;
             border-radius: 20px;
             font-weight: 700;
@@ -115,12 +115,18 @@
             color: #ff3333;
         }
 
-        /* Main Content */
+        /* Main Content - Centered */
         .main-content {
             flex-grow: 1;
             padding: 50px;
             overflow-y: auto;
-            background-image: radial-gradient(circle at 80% 20%, rgba(0, 230, 118, 0.02) 0%, transparent 40%);
+            background-image: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.01) 0%, transparent 40%);
+            display: flex;
+            justify-content: center;
+        }
+        .main-container {
+            max-width: 1000px;
+            width: 100%;
         }
         .header-area {
             display: flex;
@@ -133,7 +139,7 @@
             font-size: 2.2rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #fff 0%, #a8ffb2 100%);
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -141,23 +147,23 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(0, 230, 118, 0.08);
-            border: 1px solid rgba(0, 230, 118, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 8px 18px;
             border-radius: 30px;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.8rem;
             font-weight: 700;
-            color: var(--emerald);
+            color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
         .status-dot {
             width: 8px;
             height: 8px;
-            background-color: var(--emerald);
+            background-color: var(--accent);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--emerald);
+            box-shadow: 0 0 10px var(--accent);
         }
         .subtitle {
             color: var(--text-muted);
@@ -170,7 +176,7 @@
             backdrop-filter: blur(16px);
             padding: 35px;
             border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             margin-bottom: 35px;
         }
         .form-row {
@@ -192,12 +198,12 @@
         }
         .form-row input:focus {
             outline: none;
-            border-color: var(--emerald);
-            box-shadow: 0 0 12px var(--emerald-glow);
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--glow);
         }
         .btn-submit {
             padding: 14px 28px;
-            background: linear-gradient(135deg, var(--emerald) 0%, #00b0ff 100%);
+            background: #ffffff;
             color: #050608;
             border: none;
             border-radius: 12px;
@@ -206,17 +212,18 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 15px var(--emerald-glow);
+            box-shadow: 0 4px 15px var(--glow);
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+            background: #f8fafc;
         }
         .console-box {
-            background: #060907;
+            background: #090a0d;
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             padding: 24px;
@@ -238,18 +245,18 @@
         .dot.green { background-color: #27c93f; }
         pre {
             font-family: 'Fira Code', monospace;
-            color: #00e676;
+            color: #ffffff;
             font-size: 0.92rem;
             white-space: pre-wrap;
             word-wrap: break-word;
             line-height: 1.6;
         }
         .mitigation-info {
-            border-top: 1px solid rgba(0, 230, 118, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 18px;
             margin-top: 20px;
             font-size: 0.85rem;
-            color: var(--emerald);
+            color: var(--text-muted);
             font-weight: 600;
             line-height: 1.45;
             display: flex;
@@ -259,6 +266,7 @@
         .mitigation-info svg {
             flex-shrink: 0;
             margin-top: 2px;
+            color: var(--accent);
         }
         .spinner {
             display: inline-block;
@@ -280,7 +288,7 @@
     <div class="sidebar">
         <div>
             <div class="logo-area">
-                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="var(--emerald)" stroke-width="2.5">
+                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                 </svg>
                 <h3>SECURE NODE</h3>
@@ -328,45 +336,47 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="header-area">
-            <h2>Network Diagnostics</h2>
-            <div class="status-pill">
-                <span class="status-dot"></span>
-                Node Shield Enforced
-            </div>
-        </div>
-        <p class="subtitle" style="margin-top:-20px;">Perform secure diagnostic connection checks directly from the server node.</p>
-        
-        <div class="dashboard-card">
-            <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.25rem;">Ping Host Node</h3>
-            <p style="margin-top:4px;">Enter a target domain name or IP address to execute a connection check check.</p>
-            
-            <form method="POST" action="/ping">
-                <div class="form-row">
-                    <input type="text" id="target" name="target" value="{{ target }}" placeholder="e.g. 127.0.0.1" required autocomplete="off">
-                    <button type="submit" class="btn-submit">Run Diagnostic</button>
+        <div class="main-container">
+            <div class="header-area">
+                <h2>Network Diagnostics</h2>
+                <div class="status-pill">
+                    <span class="status-dot"></span>
+                    Node Shield Enforced
                 </div>
-            </form>
-            
-            <div class="mitigation-info">
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>Remediation: User input is validated against a strict domain/IP regular expression pattern. Commands are executed without a shell mapping (<code>shell=False</code>) as discrete arrays, blocking metacharacter command insertions.</span>
             </div>
-        </div>
+            <p class="subtitle" style="margin-top:-20px;">Perform secure diagnostic connection checks directly from the server node.</p>
+            
+            <div class="dashboard-card">
+                <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.25rem;">Ping Host Node</h3>
+                <p style="margin-top:4px;">Enter a target domain name or IP address to execute a connection check.</p>
+                
+                <form method="POST" action="/ping">
+                    <div class="form-row">
+                        <input type="text" id="target" name="target" value="{{ target }}" placeholder="e.g. 127.0.0.1" required autocomplete="off">
+                        <button type="submit" class="btn-submit">Run Diagnostic</button>
+                    </div>
+                </form>
+                
+                <div class="mitigation-info">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Remediation: User input is validated against a strict domain/IP regular expression pattern. Commands are executed without a shell mapping (<code>shell=False</code>) as discrete arrays, blocking metacharacter command insertions.</span>
+                </div>
+            </div>
 
-        {% if output %}
-            <div class="console-box">
-                <div class="console-header">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
+            {% if output %}
+                <div class="console-box">
+                    <div class="console-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:10px;">Console Terminal Output</h3>
+                    <pre>{{ output }}</pre>
                 </div>
-                <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:10px;">Console Terminal Output</h3>
-                <pre>{{ output }}</pre>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
     
     <script>

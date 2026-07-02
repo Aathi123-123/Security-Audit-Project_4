@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Note - Secure Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #080a0c;
-            --card-bg: rgba(16, 24, 20, 0.45);
-            --border-color: rgba(46, 204, 113, 0.25);
-            --text-main: #f3f4f6;
+            --bg-dark: #050608;
+            --bg-panel: rgba(20, 20, 20, 0.45);
+            --border-neon: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
             --text-muted: #8e9a9d;
-            --accent: #00e676;
+            --accent: #ffffff;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 10% 20%, rgba(0, 230, 118, 0.04) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.03) 0%, transparent 40%);
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -28,12 +28,12 @@
             padding: 20px;
         }
         .container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            background: var(--bg-panel);
+            border: 1px solid var(--border-neon);
             backdrop-filter: blur(24px);
             padding: 45px 40px;
             border-radius: 24px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 230, 118, 0.08);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.02);
             max-width: 580px;
             width: 100%;
             animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -45,8 +45,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 4px;
+            right: 0;
+            height: 3px;
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
         @keyframes slideUp {
@@ -54,16 +54,17 @@
             to { opacity: 1; transform: translateY(0); }
         }
         h2 {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1.7rem;
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #a8ffb2 100%);
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.02em;
         }
         .note-body {
-            background: rgba(0, 230, 118, 0.04);
+            background: rgba(255, 255, 255, 0.03);
             border-left: 4px solid var(--accent);
             border-radius: 8px;
             padding: 24px;
@@ -71,10 +72,10 @@
             font-size: 0.95rem;
             line-height: 1.6;
             margin-bottom: 20px;
-            color: rgba(243, 244, 246, 0.9);
-            border-top: 1px solid rgba(0, 230, 118, 0.05);
-            border-right: 1px solid rgba(0, 230, 118, 0.05);
-            border-bottom: 1px solid rgba(0, 230, 118, 0.05);
+            color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         .owner-details {
             font-size: 0.88rem;
