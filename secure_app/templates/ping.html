@@ -4,45 +4,213 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ping Diagnostic - Secure Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 40px; }
-        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; }
-        nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
-        nav a { margin-right: 15px; color: #2e7d32; text-decoration: none; font-weight: bold; }
-        .user-info { float: right; color: #555; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; }
-        .form-group input { width: 70%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
-        .btn { padding: 8px 20px; background-color: #2e7d32; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        .btn:hover { background-color: #1b5e20; }
-        pre { background-color: #000; color: #0f0; padding: 15px; border-radius: 4px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; }
+        :root {
+            --bg-color: #0b0d0e;
+            --card-bg: rgba(16, 22, 19, 0.4);
+            --border-color: rgba(46, 204, 113, 0.15);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent: #2ecc71;
+            --accent-hover: #27ae60;
+            --glow: rgba(46, 204, 113, 0.15);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.03) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.03) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(12px);
+        }
+        .nav-links { display: flex; gap: 20px; }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: var(--accent);
+        }
+        nav a.active {
+            color: var(--accent);
+        }
+        .user-info {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .user-info strong { color: var(--text-main); }
+        .user-info a {
+            color: #ff6b6b;
+            margin-left: 8px;
+            text-decoration: none;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, #a8ffb2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            align-items: center;
+        }
+        .form-row input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(16, 22, 19, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        .form-row input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--glow);
+        }
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--accent) 0%, #27ae60 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--glow);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+        }
+        .console-box {
+            background: #060907;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .console-header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .dot.red { background-color: #ff5f56; }
+        .dot.yellow { background-color: #ffbd2e; }
+        .dot.green { background-color: #27c93f; }
+        pre {
+            font-family: 'Fira Code', monospace;
+            color: #2ecc71;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+        .audit-hint {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-top: 15px;
+            background: rgba(46, 204, 113, 0.05);
+            border: 1px solid rgba(46, 204, 113, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <nav>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/ping">Ping Tool</a>
-            <a href="/feedback">Feedback & Chat</a>
-            <a href="/download?file=sample.txt">Download Sample Template</a>
-            <span class="user-info">Logged in as: <strong>{{ session['username'] }}</strong> | <a href="/logout">Logout</a></span>
+            <div class="nav-links">
+                <a href="/dashboard">Dashboard</a>
+                <a href="/ping" class="active">Ping Tool</a>
+                <a href="/feedback">Feedback Hub</a>
+            </div>
+            <div class="user-info">
+                Logged in as: <strong>{{ session['username'] }}</strong> | <a href="/logout">Logout</a>
+            </div>
         </nav>
 
-        <h2>Network Diagnostics: Ping</h2>
-        <p>Enter an IP address or hostname to verify connectivity from the server. (e.g. <code>127.0.0.1</code>)</p>
-        <p>Note: Input is strictly validated to prevent command injection characters like <code>;</code>, <code>&</code>, <code>|</code>, etc.</p>
+        <h2>Network Diagnostics</h2>
+        <p class="subtitle">Perform network diagnostic checks directly from the server node.</p>
         
-        <form method="POST" action="/ping">
-            <div class="form-group">
-                <label for="target">Target Host / IP</label>
-                <input type="text" id="target" name="target" value="{{ target }}" placeholder="e.g. 127.0.0.1" required autocomplete="off">
-                <button type="submit" class="btn">Execute Ping</button>
+        <div class="card">
+            <h3 style="font-weight:600; font-size:1.2rem;">Secure Host Ping</h3>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:5px;">Enter a target domain name or IP address to execute a connection check.</p>
+            
+            <form method="POST" action="/ping">
+                <div class="form-row">
+                    <input type="text" id="target" name="target" value="{{ target }}" placeholder="e.g. 127.0.0.1" required autocomplete="off">
+                    <button type="submit" class="btn">Ping Target</button>
+                </div>
+            </form>
+            
+            <div class="audit-hint">
+                <strong>Remediation:</strong> User input is validated against a strict domain/IP regular expression pattern. Commands are executed without a shell mapping (<code>shell=False</code>) as discrete arrays, blocking metacharacter command insertions.
             </div>
-        </form>
+        </div>
 
         {% if output %}
-            <h3>Diagnostic Output:</h3>
-            <pre>{{ output }}</pre>
+            <div class="console-box">
+                <div class="console-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <h3>Console Output:</h3>
+                <pre>{{ output }}</pre>
+            </div>
         {% endif %}
     </div>
 </body>

@@ -4,48 +4,204 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Secure Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 40px; }
-        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; }
-        nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
-        nav a { margin-right: 15px; color: #2e7d32; text-decoration: none; font-weight: bold; }
-        .user-info { float: right; color: #555; }
-        .card { border: 1px solid #ddd; padding: 15px; border-radius: 4px; margin-bottom: 15px; background: #fafafa; }
-        .success-text { color: #2e7d32; }
+        :root {
+            --bg-color: #0b0d0e;
+            --card-bg: rgba(16, 22, 19, 0.4);
+            --border-color: rgba(46, 204, 113, 0.15);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent: #2ecc71;
+            --glow: rgba(46, 204, 113, 0.15);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.03) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.03) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(12px);
+        }
+        .nav-links { display: flex; gap: 20px; }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+        .user-info {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .user-info strong { color: var(--text-main); }
+        .user-info a {
+            color: #ff6b6b;
+            margin-left: 8px;
+            text-decoration: none;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, #a8ffb2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media(max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(46, 204, 113, 0.3);
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+        .card p {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 16px;
+        }
+        .card ul li {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        .card ul li a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .card ul li a:hover {
+            text-decoration: underline;
+        }
+        .audit-hint {
+            border-top: 1px solid rgba(46, 204, 113, 0.15);
+            padding-top: 12px;
+            margin-top: 12px;
+            font-size: 0.85rem !important;
+            color: var(--accent) !important;
+            font-weight: 500;
+        }
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-link:hover {
+            background: var(--accent);
+            color: #101613;
+            box-shadow: 0 4px 12px var(--glow);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <nav>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/ping">Ping Tool</a>
-            <a href="/feedback">Feedback & Chat</a>
-            <a href="/download?file=sample.txt">Download Sample Template</a>
-            <span class="user-info">Logged in as: <strong>{{ session['username'] }}</strong> ({{ session['role'] }}) | <a href="/logout">Logout</a></span>
+            <div class="nav-links">
+                <a href="/dashboard" class="active">Dashboard</a>
+                <a href="/ping">Ping Tool</a>
+                <a href="/feedback">Feedback Hub</a>
+            </div>
+            <div class="user-info">
+                Logged in as: <strong>{{ session['username'] }}</strong> ({{ session['role'] }}) | <a href="/logout">Logout</a>
+            </div>
         </nav>
         
-        <h2>Welcome to the Secure Control Dashboard</h2>
-        <p>Use the options above to navigate the internal system utilities.</p>
+        <h2>Secure Control Center</h2>
+        <p class="subtitle">Audited administrative dashboard with built-in validation engines.</p>
         
-        <div class="card">
-            <h3>Quick Links & IDOR Test</h3>
-            <p>Notes assigned to you:</p>
-            <ul>
-                {% if session['user_id'] == 1 %}
-                    <li><a href="/view_note?id=1">View Secret Admin Notes</a> (Note ID: 1)</li>
-                {% elif session['user_id'] == 2 %}
-                    <li><a href="/view_note?id=2">View Alice Diary</a> (Note ID: 2)</li>
-                {% elif session['user_id'] == 3 %}
-                    <li><a href="/view_note?id=3">View Bob Shopping List</a> (Note ID: 3)</li>
-                {% endif %}
-            </ul>
-            <p>You can also try visiting notes that do not belong to you (e.g., if you are Alice, try viewing Note ID 1). You should see an Access Denied message.</p>
-        </div>
+        <div class="grid">
+            <div class="card">
+                <h3>Mitigated: IDOR Protection</h3>
+                <p>Private user data is guarded. Attempts to access notes belonging to other profiles return access denial responses.</p>
+                <ul>
+                    {% if session['user_id'] == 1 %}
+                        <li><a href="/view_note?id=1">→ Private Admin Database Backup Notes</a></li>
+                    {% elif session['user_id'] == 2 %}
+                        <li><a href="/view_note?id=2">→ Alice's Personal Notes</a></li>
+                    {% elif session['user_id'] == 3 %}
+                        <li><a href="/view_note?id=3">→ Bob's shopping list</a></li>
+                    {% endif %}
+                </ul>
+                <p class="audit-hint">Remediation: Strict authentication validation mappings enforce object-level authorization.</p>
+            </div>
 
-        <div class="card">
-            <h3>Download Testing</h3>
-            <p>You can download templates using: <code>/download?file=sample.txt</code></p>
-            <p class="success-text"><strong>Security Enforcement:</strong> Accessing files outside the static directory (such as <code>../secure.db</code> or system files) will return a 403 Forbidden or 400 Bad Request error.</p>
+            <div class="card">
+                <h3>Mitigated: Path Traversal Block</h3>
+                <p>The download tool restricts paths using secure filename conversions and directory boundary matching checks.</p>
+                <a href="/download?file=sample.txt" class="btn-link">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    Download sample.txt
+                </a>
+                <p class="audit-hint">Remediation: Path resolution validates canonical destinations remain under static boundaries.</p>
+            </div>
         </div>
     </div>
 </body>

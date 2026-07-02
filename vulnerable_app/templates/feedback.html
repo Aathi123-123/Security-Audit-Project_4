@@ -4,72 +4,252 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback Hub - Vulnerable Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 40px; }
-        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; }
-        nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
-        nav a { margin-right: 15px; color: #337ab7; text-decoration: none; font-weight: bold; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; }
-        .form-group input, .form-group textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .btn { padding: 8px 20px; background-color: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        .btn:hover { background-color: #c9302c; }
-        .reflected-alert { background-color: #d9edf7; border: 1px solid #bce8f1; color: #31708f; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
-        .feedback-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
-        .feedback-name { font-weight: bold; color: #333; }
-        .feedback-msg { margin-top: 5px; color: #555; }
+        :root {
+            --bg-color: #0d0f12;
+            --card-bg: rgba(22, 28, 36, 0.4);
+            --border-color: rgba(255, 75, 75, 0.15);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent: #ff4b4b;
+            --accent-hover: #ff3333;
+            --glow: rgba(255, 75, 75, 0.15);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(255, 75, 75, 0.03) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.03) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(12px);
+        }
+        .nav-links { display: flex; gap: 20px; }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+        .user-info {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .user-info strong { color: var(--text-main); }
+        .user-info a {
+            color: #ff6b6b;
+            margin-left: 8px;
+            text-decoration: none;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, #ff8f8f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1.8fr;
+            gap: 30px;
+        }
+        @media(max-width: 768px) {
+            .layout-grid { grid-template-columns: 1fr; }
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            height: fit-content;
+        }
+        .reflected-box {
+            background: rgba(33, 150, 243, 0.08);
+            border: 1px solid rgba(33, 150, 243, 0.2);
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            color: #90caf9;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(22, 28, 36, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--glow);
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--accent) 0%, #d32f2f 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--glow);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 75, 75, 0.4);
+        }
+        .feedback-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            transition: border-color 0.3s ease;
+        }
+        .feedback-item:hover {
+            border-color: var(--border-color);
+        }
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .feedback-name {
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: var(--accent);
+        }
+        .feedback-msg {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: rgba(243, 244, 246, 0.85);
+            word-break: break-all;
+        }
+        .hint-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+            text-align: center;
+        }
+        .hint-text code {
+            color: var(--accent);
+            background: rgba(255, 75, 75, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <nav>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/ping">Ping Tool</a>
-            <a href="/feedback">Feedback & Chat</a>
-            <a href="/download?file=sample.txt">Download Sample Template</a>
+            <div class="nav-links">
+                <a href="/dashboard">Dashboard</a>
+                <a href="/ping">Ping Tool</a>
+                <a href="/feedback" class="active">Feedback Hub</a>
+            </div>
+            <div class="user-info">
+                Logged in as: <strong>{{ session['username'] }}</strong> | <a href="/logout">Logout</a>
+            </div>
         </nav>
 
         <h2>Feedback & Message Hub</h2>
+        <p class="subtitle">Submit messages to review the vulnerable HTML escaping architecture.</p>
 
-        <!-- Reflected XSS Demo: msg query parameter is rendered directly using safe filter -->
         {% if reflected_msg %}
-            <div class="reflected-alert">
-                <strong>System Notice:</strong> {{ reflected_msg | safe }}
+            <div class="reflected-box">
+                <strong>System Message:</strong> {{ reflected_msg | safe }}
             </div>
         {% endif %}
 
-        <div style="margin-bottom: 30px;">
-            <p>Try testing Reflected XSS by adding <code>?msg=&lt;script&gt;alert(1)&lt;/script&gt;</code> to the URL.</p>
-        </div>
-
-        <form method="POST" action="/feedback">
-            <h3>Leave a Feedback Message</h3>
-            <div class="form-group">
-                <label for="name">Name / Department</label>
-                <input type="text" id="name" name="name" required autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label for="message">Feedback / Message</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn">Submit Message</button>
-        </form>
-
-        <hr>
-
-        <h3>Stored Messages</h3>
-        <div class="feedback-list">
-            {% if feedbacks %}
-                {% for name, message in feedbacks %}
-                    <div class="feedback-item">
-                        <!-- Stored XSS Demo: database values rendered using safe filter -->
-                        <span class="feedback-name">{{ name | safe }}</span> says:
-                        <div class="feedback-msg">{{ message | safe }}</div>
+        <div class="layout-grid">
+            <div class="card">
+                <h3 style="font-weight:600; font-size:1.15rem; margin-bottom:15px;">Send Feedback</h3>
+                <form method="POST" action="/feedback">
+                    <div class="form-group">
+                        <label for="name">Author / Dept</label>
+                        <input type="text" id="name" name="name" required autocomplete="off" placeholder="e.g. Security Audit Team">
                     </div>
-                {% endfor %}
-            {% else %}
-                <p>No feedback messages yet.</p>
-            {% endif %}
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" required placeholder="Write message..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">Post Message</button>
+                </form>
+                
+                <div class="hint-text">
+                    Test Reflected XSS via URL: <code>?msg=&lt;script&gt;alert(1)&lt;/script&gt;</code>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="font-weight:600; font-size:1.15rem; margin-bottom:20px;">Stored Messages Board</h3>
+                <div class="feedback-list">
+                    {% if feedbacks %}
+                        {% for name, message in feedbacks %}
+                            <div class="feedback-item">
+                                <div class="feedback-header">
+                                    <span class="feedback-name">{{ name | safe }}</span>
+                                    <span style="font-size:0.75rem; color:var(--text-muted);">Posted</span>
+                                </div>
+                                <div class="feedback-msg">{{ message | safe }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p style="color:var(--text-muted); font-size:0.9rem; text-align:center; padding: 20px 0;">No messages posted yet.</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 </body>
