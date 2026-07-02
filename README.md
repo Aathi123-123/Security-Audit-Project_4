@@ -66,6 +66,20 @@ pip install Flask werkzeug requests
 
 ---
 
+## Staging Test Credentials
+
+Use the following user profiles to log in and test horizontal/vertical privilege escalation (IDOR) behavior:
+
+| Username | Password | Role | Expected Privileges |
+| :--- | :--- | :--- | :--- |
+| **admin** | `admin123` | Administrator | Full access to Admin Notes (ID: 1) |
+| **alice** | `alicepassword` | Standard User | Access to Alice Notes (ID: 2) |
+| **bob** | `bobpassword` | Standard User | Access to Bob Notes (ID: 3) |
+
+In the **Vulnerable Portal**, any logged-in user can access other notes (e.g., logging in as Alice and visiting `/view_note?id=1` bypasses authorization). In the **Secure Portal**, access is restricted, returning a styled `403 Forbidden` error page.
+
+---
+
 ## How to Run & Test
 
 ### 1. Launching the Applications
