@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error - Secure Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #07050a;
-            --bg-panel: rgba(18, 12, 28, 0.45);
-            --border-neon: rgba(168, 85, 247, 0.25);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-start: #a855f7;
-            --accent-mid: #06b6d4;
-            --accent-end: #ec4899;
-            --glow: rgba(168, 85, 247, 0.2);
+            --bg-color: #0b0d0e;
+            --card-bg: rgba(16, 22, 19, 0.4);
+            --border-color: rgba(46, 204, 113, 0.15);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent: #2ecc71;
+            --accent-hover: #27ae60;
+            --glow: rgba(46, 204, 113, 0.15);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 45%),
-                              radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 45%);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.03) 0%, transparent 40%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -30,83 +36,82 @@
             justify-content: center;
             padding: 20px;
         }
+
         .container {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-neon);
-            backdrop-filter: blur(24px);
-            padding: 45px 40px;
-            border-radius: 24px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(168, 85, 247, 0.08);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(16px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             max-width: 480px;
             width: 100%;
             text-align: center;
-            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
         }
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-start), var(--accent-mid), var(--accent-end));
-            border-radius: 28px 28px 0 0;
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+
         .icon {
-            color: var(--accent-mid);
+            color: var(--accent);
             margin-bottom: 20px;
-            filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4));
         }
+
         h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 12px;
-            background: linear-gradient(135deg, #fff 30%, #cbd5e1 70%, #d8b4fe 100%);
+            background: linear-gradient(135deg, #fff 0%, #a8ffb2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.02em;
         }
+
         .error-message {
             font-size: 0.95rem;
             line-height: 1.6;
             color: var(--text-muted);
             margin-bottom: 30px;
         }
+
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             padding: 12px 30px;
-            background: linear-gradient(90deg, var(--accent-start), var(--accent-mid), var(--accent-end));
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--accent) 0%, #27ae60 100%);
+            color: #fff;
             text-decoration: none;
             border-radius: 10px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.95rem;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--glow);
             border: none;
             cursor: pointer;
         }
+
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4);
-            background: linear-gradient(90deg, #b975ff, #22d3ee, #f472b6);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <svg class="icon" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
         </svg>
         <h2>Operation Failed</h2>
         <div class="error-message">
@@ -115,4 +120,5 @@
         <a href="/dashboard" class="btn">Return to Dashboard</a>
     </div>
 </body>
+
 </html>

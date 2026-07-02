@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Note - Secure Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #07050a;
-            --bg-panel: rgba(18, 12, 28, 0.45);
-            --border-neon: rgba(168, 85, 247, 0.25);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-start: #a855f7;
-            --accent-mid: #06b6d4;
-            --accent-end: #ec4899;
-            --glow: rgba(168, 85, 247, 0.2);
+            --bg-color: #080a0c;
+            --card-bg: rgba(16, 24, 20, 0.45);
+            --border-color: rgba(46, 204, 113, 0.25);
+            --text-main: #f3f4f6;
+            --text-muted: #8e9a9d;
+            --accent: #00e676;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 45%),
-                              radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 45%);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 230, 118, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.03) 0%, transparent 40%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -30,57 +36,68 @@
             justify-content: center;
             padding: 20px;
         }
+
         .container {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-neon);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             backdrop-filter: blur(24px);
             padding: 45px 40px;
             border-radius: 24px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(168, 85, 247, 0.08);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 230, 118, 0.08);
             max-width: 580px;
             width: 100%;
             animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
         }
+
         .container::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-start), var(--accent-mid), var(--accent-end));
-            border-radius: 28px 28px 0 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
+
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         h2 {
-            font-family: 'Space Grotesk', sans-serif;
             font-size: 1.7rem;
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 30%, #cbd5e1 70%, #d8b4fe 100%);
+            background: linear-gradient(135deg, #fff 0%, #a8ffb2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.02em;
         }
+
         .note-body {
-            background: rgba(168, 85, 247, 0.04);
-            border-left: 4px solid var(--accent-mid);
+            background: rgba(0, 230, 118, 0.04);
+            border-left: 4px solid var(--accent);
             border-radius: 8px;
             padding: 24px;
             font-family: 'Fira Code', monospace;
             font-size: 0.95rem;
             line-height: 1.6;
             margin-bottom: 20px;
-            color: rgba(243, 244, 246, 0.95);
-            border-top: 1px solid rgba(168, 85, 247, 0.05);
-            border-right: 1px solid rgba(168, 85, 247, 0.05);
-            border-bottom: 1px solid rgba(168, 85, 247, 0.05);
+            color: rgba(243, 244, 246, 0.9);
+            border-top: 1px solid rgba(0, 230, 118, 0.05);
+            border-right: 1px solid rgba(0, 230, 118, 0.05);
+            border-bottom: 1px solid rgba(0, 230, 118, 0.05);
         }
+
         .owner-details {
             font-size: 0.88rem;
             color: var(--text-muted);
@@ -89,7 +106,11 @@
             align-items: center;
             gap: 8px;
         }
-        .owner-details strong { color: var(--text-main); }
+
+        .owner-details strong {
+            color: var(--text-main);
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -100,11 +121,13 @@
             font-weight: 600;
             transition: color 0.3s ease;
         }
+
         .back-link:hover {
-            color: var(--accent-mid);
+            color: var(--accent);
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Note Viewer (ID: {{ id }})</h2>
@@ -113,16 +136,23 @@
         </div>
         <div class="owner-details">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
             Author Token: <strong>{{ owner }}</strong>
         </div>
         <a href="/dashboard" class="back-link">
             <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             Back to Dashboard
         </a>
     </div>
 </body>
+
+</html>
+</a>
+</div>
+</body>
+
 </html>
