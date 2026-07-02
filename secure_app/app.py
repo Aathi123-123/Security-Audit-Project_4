@@ -164,7 +164,7 @@ def view_note():
         
     note_id = request.args.get('id')
     if not note_id or not note_id.isdigit():
-        return "Invalid parameters", 400
+        return render_template('error.html', message="Invalid parameters"), 400
         
     user_id = session['user_id']
     role = session['role']
@@ -196,7 +196,7 @@ def view_note():
         return render_template('note.html', content=note[0], owner=note[1], id=note_id)
     else:
         # Mitigation: Return generic message and unauthorized status code
-        return "Access denied or note not found", 403
+        return render_template('error.html', message="Access denied or note not found"), 403
 
 # Mitigation: Secure Path Traversal using safe directory confinement and secure names
 @app.route('/download')
@@ -206,23 +206,23 @@ def download():
         
     filename = request.args.get('file', '')
     if not filename:
-        return "Filename parameter is missing", 400
+        return render_template('error.html', message="Filename parameter is missing"), 400
         
     # Mitigation 1: Strip relative paths using secure_filename
     cleaned_filename = secure_filename(filename)
     if not cleaned_filename:
-        return "Invalid filename", 400
+        return render_template('error.html', message="Invalid filename"), 400
         
     # Mitigation 2: Ensure canonical resolved path is restricted strictly to ALLOWED_DOWNLOAD_DIR
     filepath = os.path.abspath(os.path.join(ALLOWED_DOWNLOAD_DIR, cleaned_filename))
     
     if not filepath.startswith(ALLOWED_DOWNLOAD_DIR + os.sep) and filepath != ALLOWED_DOWNLOAD_DIR:
-        return "Access to specified file path is forbidden.", 403
+        return render_template('error.html', message="Access to specified file path is forbidden."), 403
         
     try:
         return send_file(filepath, as_attachment=True)
     except Exception as e:
-        return "Requested file not found", 404
+        return render_template('error.html', message="Requested file not found"), 404
 
 # Mitigation: Stored and Reflected XSS fixes via removal of unsafe/safe filters
 @app.route('/feedback', methods=['GET', 'POST'])
@@ -237,10 +237,13 @@ def feedback():
         
         # Enforce character length validation
         if len(name) > 50 or len(message) > 500:
-            return "Input exceeds max length limits", 400
+            conn.close()
+            return render_template('error.html', message="Input exceeds max length limits"), 400
             
         cursor.execute("INSERT INTO feedback (name, message) VALUES (?, ?)", (name, message))
         conn.commit()
+        conn.close()
+        return redirect(url_for('feedback', msg="Feedback submitted successfully."))
 
     cursor.execute("SELECT name, message FROM feedback ORDER BY id DESC")
     feedbacks = cursor.fetchall()

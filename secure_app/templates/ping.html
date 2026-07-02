@@ -115,6 +115,9 @@
             box-shadow: 0 0 12px var(--glow);
         }
         .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: 12px 24px;
             background: linear-gradient(135deg, var(--accent) 0%, #27ae60 100%);
             color: #fff;
@@ -129,6 +132,19 @@
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+        }
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         .console-box {
             background: #060907;
@@ -213,5 +229,14 @@
             </div>
         {% endif %}
     </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function() {
+            const btn = document.querySelector('.btn');
+            btn.innerHTML = '<span class="spinner"></span> Diagnostic Running...';
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
+            btn.style.cursor = 'not-allowed';
+        });
+    </script>
 </body>
 </html>

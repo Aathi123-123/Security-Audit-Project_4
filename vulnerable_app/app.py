@@ -130,7 +130,7 @@ def view_note():
     
     if note:
         return render_template('note.html', content=note[0], owner=note[1], id=note_id)
-    return "Note not found", 404
+    return render_template('error.html', message="Note not found"), 404
 
 # Path Traversal (Arbitrary File Read) Vulnerability
 @app.route('/download')
@@ -139,16 +139,15 @@ def download():
     # e.g. /download?file=../../../../Windows/System32/drivers/etc/hosts or /download?file=vulnerable.db
     filename = request.args.get('file', '')
     if not filename:
-        return "Filename parameter is missing", 400
+        return render_template('error.html', message="Filename parameter is missing"), 400
     
     # Path traversal payload bypasses expected static directory
     filepath = os.path.join(os.path.dirname(__file__), 'static', filename)
     try:
         return send_file(filepath, as_attachment=True)
     except Exception as e:
-        return f"File access error: {str(e)}", 404
+        return render_template('error.html', message=f"File access error: {str(e)}"), 404
 
-# Stored and Reflected XSS Vulnerabilities
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
     # Store feedback in memory database/list for stored XSS demonstration
@@ -164,6 +163,8 @@ def feedback():
         message = request.form.get('message', '')
         cursor.execute("INSERT INTO feedback (name, message) VALUES (?, ?)", (name, message))
         conn.commit()
+        conn.close()
+        return redirect(url_for('feedback', msg="Feedback submitted successfully!"))
 
     cursor.execute("SELECT name, message FROM feedback ORDER BY id DESC")
     feedbacks = cursor.fetchall()
