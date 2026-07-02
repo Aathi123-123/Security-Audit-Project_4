@@ -3,186 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Portal v1.0 - Audited Node</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>Secure Portal Node v1.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #080a0c;
-            --card-bg: rgba(16, 24, 20, 0.45);
-            --border-color: rgba(46, 204, 113, 0.25);
-            --text-main: #f3f4f6;
-            --text-muted: #8e9a9d;
-            --accent: #00e676;
-            --accent-hover: #00c853;
-            --glow: rgba(0, 230, 118, 0.35);
+            --bg-dark: #050608;
+            --bg-panel: rgba(10, 15, 12, 0.5);
+            --border-neon: rgba(0, 230, 118, 0.2);
+            --border-neon-bright: rgba(0, 230, 118, 0.6);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --emerald: #00e676;
+            --emerald-glow: rgba(0, 230, 118, 0.3);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 230, 118, 0.07) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.04) 0%, transparent 40%);
+                radial-gradient(circle at 0% 0%, rgba(0, 230, 118, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(30, 41, 59, 0.5) 0%, transparent 50%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            overflow-x: hidden;
-        }
-        .container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(24px);
-            padding: 50px 40px;
-            border-radius: 24px;
-            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 230, 118, 0.08);
-            max-width: 580px;
-            width: 100%;
-            text-align: center;
-            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
             overflow: hidden;
         }
-        .container::before {
+        .gateway-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-neon);
+            backdrop-filter: blur(30px);
+            padding: 50px;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 230, 118, 0.05);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            animation: cardEntrance 1s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(40px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .gateway-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--emerald), transparent);
+            border-radius: 28px 28px 0 0;
         }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .pulse-indicator {
+        .badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             background: rgba(0, 230, 118, 0.08);
-            border: 1px solid rgba(0, 230, 118, 0.2);
-            padding: 6px 14px;
-            border-radius: 20px;
+            border: 1px solid rgba(0, 230, 118, 0.18);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent);
+            font-weight: 700;
+            color: var(--emerald);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 24px;
+            letter-spacing: 0.08em;
+            margin-bottom: 28px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
         .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent);
+            width: 6px;
+            height: 6px;
+            background-color: var(--emerald);
             border-radius: 50%;
-            animation: pulse 1.8s infinite;
+            box-shadow: 0 0 10px var(--emerald);
+            animation: pulseGlow 2s infinite;
         }
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(0, 230, 118, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+        @keyframes pulseGlow {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
         }
         h1 {
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #fff 0%, #b2ffc8 100%);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 18px;
+            background: linear-gradient(135deg, #ffffff 30%, #a7ffd1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
         }
-        p.desc {
-            font-size: 1rem;
+        p.subtitle {
+            font-size: 1.05rem;
             line-height: 1.6;
             color: var(--text-muted);
-            margin-bottom: 30px;
-        }
-        .system-checks {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 14px;
-            padding: 20px;
             margin-bottom: 35px;
-            text-align: left;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.82rem;
         }
-        .system-check-item {
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        .metric-item {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 16px 20px;
+            transition: all 0.3s ease;
+        }
+        .metric-item:hover {
+            background: rgba(0, 230, 118, 0.02);
+            border-color: rgba(0, 230, 118, 0.15);
+        }
+        .metric-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        .metric-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            color: #a8ffb2;
+            gap: 6px;
         }
-        .system-check-item:last-child { margin-bottom: 0; }
-        .system-check-item span.status {
-            color: var(--accent);
-            font-weight: bold;
+        .dot-green {
+            color: var(--emerald);
         }
-        .btn {
+        .btn-enter {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 14px 36px;
-            background: linear-gradient(135deg, var(--accent) 0%, #00c853 100%);
-            color: #080a0c;
+            gap: 10px;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--emerald) 0%, #00b0ff 100%);
+            color: #050608;
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 14px;
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 0.98rem;
+            font-size: 1.05rem;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 20px var(--glow);
+            box-shadow: 0 4px 20px var(--emerald-glow);
             border: none;
             cursor: pointer;
         }
-        .btn:hover {
+        .btn-enter:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 230, 118, 0.5);
-            background: linear-gradient(135deg, #22ff8b 0%, var(--accent-hover) 100%);
-        }
-        .btn:active {
-            transform: translateY(0);
+            box-shadow: 0 8px 30px rgba(0, 230, 118, 0.4);
+            background: linear-gradient(135deg, #33ff99 0%, #00e676 100%);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="pulse-indicator">
+    <div class="gateway-card">
+        <div class="badge">
             <span class="pulse-dot"></span>
-            Connection Secure
+            NODE-04 AUDITED SECURE
         </div>
         
-        <h1>SECURE ADMIN NODE</h1>
-        <p class="desc">Audited and hardened system portal. Industry standard controls protect this application against code injects, IDOR, path traversals, and raw data leaks.</p>
+        <h1>SECURE DIAGNOSTICS GATEWAY</h1>
+        <p class="subtitle">Enter the audited network testing portal. Fully hardened against parameter manipulation, system injections, and raw database leaks.</p>
         
-        <div class="system-checks">
-            <div class="system-check-item">
-                <span>[✓] SQL Parameterization Engine</span>
-                <span class="status">ACTIVE</span>
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <div class="metric-label">Vulnerability Status</div>
+                <div class="metric-value"><span class="dot-green">●</span> 100% Remediated</div>
             </div>
-            <div class="system-check-item">
-                <span>[✓] OS Command Isolation Mode</span>
-                <span class="status">SHIELDED</span>
+            <div class="metric-item">
+                <div class="metric-label">Access Control</div>
+                <div class="metric-value">RBAC Hardened</div>
             </div>
-            <div class="system-check-item">
-                <span>[✓] Path Boundary Confinement</span>
-                <span class="status">RESTRICTED</span>
+            <div class="metric-item">
+                <div class="metric-label">System Encryption</div>
+                <div class="metric-value">PBKDF2 Enforced</div>
             </div>
-            <div class="system-check-item">
-                <span>[✓] Cryptographic PBKDF2 Hashing</span>
-                <span class="status">ENCRYPTED</span>
+            <div class="metric-item">
+                <div class="metric-label">Input Sanitization</div>
+                <div class="metric-value">Regex Confined</div>
             </div>
         </div>
         
-        <a href="/login" class="btn">
+        <a href="/login" class="btn-enter">
             Authenticate Session
-            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7"/>
             </svg>
         </a>
     </div>

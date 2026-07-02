@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Authentication - Admin Node</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Secure Gateway Authentication</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #080a0c;
-            --card-bg: rgba(16, 24, 20, 0.45);
-            --border-color: rgba(46, 204, 113, 0.25);
-            --text-main: #f3f4f6;
-            --text-muted: #8e9a9d;
-            --accent: #00e676;
-            --accent-hover: #00c853;
-            --glow: rgba(0, 230, 118, 0.15);
+            --bg-dark: #050608;
+            --bg-panel: rgba(10, 15, 12, 0.45);
+            --border-neon: rgba(0, 230, 118, 0.2);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --emerald: #00e676;
+            --emerald-glow: rgba(0, 230, 118, 0.15);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
             background-image: radial-gradient(circle at 10% 20%, rgba(0, 230, 118, 0.07) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.04) 0%, transparent 40%);
+                              radial-gradient(circle at 90% 80%, rgba(30, 41, 59, 0.5) 0%, transparent 40%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -29,66 +28,68 @@
             justify-content: center;
             padding: 20px;
         }
-        .login-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(24px);
-            padding: 45px 40px;
-            border-radius: 24px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 230, 118, 0.08);
-            max-width: 420px;
+        .login-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-neon);
+            backdrop-filter: blur(30px);
+            padding: 50px 40px;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 230, 118, 0.05);
+            max-width: 440px;
             width: 100%;
-            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-            overflow: hidden;
         }
-        .login-box::before {
+        .login-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--emerald), transparent);
+            border-radius: 28px 28px 0 0;
         }
-        @keyframes slideUp {
+        @keyframes cardEntrance {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .shield-icon {
-            color: var(--accent);
+        .icon-shield {
+            color: var(--emerald);
             display: block;
-            margin: 0 auto 16px auto;
+            margin: 0 auto 20px auto;
             text-align: center;
+            filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.4));
         }
         h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 24px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 30px;
             text-align: center;
-            background: linear-gradient(135deg, #fff 0%, #a8ffb2 100%);
+            background: linear-gradient(135deg, #ffffff 30%, #a7ffd1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.02em;
         }
         .form-group {
-            margin-bottom: 22px;
+            margin-bottom: 24px;
         }
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.78rem;
+            font-weight: 700;
             color: var(--text-muted);
-            letter-spacing: 0.03em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
         }
         .form-group input {
             width: 100%;
             padding: 14px 18px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
             color: var(--text-main);
             font-family: inherit;
             font-size: 0.95rem;
@@ -96,82 +97,81 @@
         }
         .form-group input:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 12px var(--glow);
-            background: rgba(0, 0, 0, 0.5);
+            border-color: var(--emerald);
+            box-shadow: 0 0 16px var(--emerald-glow);
+            background: rgba(0, 0, 0, 0.6);
         }
-        .btn {
+        .btn-submit {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--accent) 0%, #00c853 100%);
-            color: #080a0c;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--emerald) 0%, #00b0ff 100%);
+            color: #050608;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 15px var(--glow);
+            box-shadow: 0 4px 15px var(--emerald-glow);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
         }
-        .btn:hover {
+        .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4);
-            background: linear-gradient(135deg, #22ff8b 0%, var(--accent-hover) 100%);
+            box-shadow: 0 8px 25px rgba(0, 230, 118, 0.4);
+            background: linear-gradient(135deg, #33ff99 0%, #00e676 100%);
         }
-        .btn:active {
-            transform: translateY(0);
-        }
-        .error {
+        .error-container {
             color: #ff6b6b;
             background-color: rgba(255, 107, 107, 0.08);
             border: 1px solid rgba(255, 107, 107, 0.2);
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 0.88rem;
             text-align: center;
             font-weight: 500;
         }
         .back-link {
             display: block;
             text-align: center;
-            margin-top: 24px;
+            margin-top: 28px;
             font-size: 0.85rem;
             color: var(--text-muted);
             text-decoration: none;
             transition: color 0.3s ease;
+            font-weight: 500;
         }
         .back-link:hover {
-            color: var(--accent);
+            color: var(--emerald);
         }
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <svg class="shield-icon" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <div class="login-card">
+        <svg class="icon-shield" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
         </svg>
-        <h2>Secure Auth Gateway</h2>
+        <h2>Secure Gateway Login</h2>
         
         {% if error %}
-            <div class="error">{{ error }}</div>
+            <div class="error-container">{{ error }}</div>
         {% endif %}
         
         <form method="POST" action="/login">
             <div class="form-group">
-                <label for="username">User Identity</label>
-                <input type="text" id="username" name="username" required autocomplete="off" placeholder="Username token">
+                <label for="username">Authorized User</label>
+                <input type="text" id="username" name="username" required autocomplete="off" placeholder="Enter username token">
             </div>
             <div class="form-group">
-                <label for="password">Security Password</label>
+                <label for="password">Password Token</label>
                 <input type="password" id="password" name="password" required placeholder="••••••••">
             </div>
-            <button type="submit" class="btn">
-                Authorize Session
+            <button type="submit" class="btn-submit">
+                Authorize Gateway
             </button>
         </form>
         <a href="/" class="back-link">Return to Node Hub</a>
