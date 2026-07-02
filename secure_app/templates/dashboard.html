@@ -7,28 +7,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0d0e;
-            --card-bg: rgba(16, 22, 19, 0.4);
-            --border-color: rgba(46, 204, 113, 0.15);
+            --bg-color: #080a0c;
+            --card-bg: rgba(16, 24, 20, 0.45);
+            --border-color: rgba(46, 204, 113, 0.25);
             --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --accent: #2ecc71;
-            --glow: rgba(46, 204, 113, 0.15);
+            --text-muted: #8e9a9d;
+            --accent: #00e676;
+            --glow: rgba(0, 230, 118, 0.15);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.03) 0%, transparent 40%),
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 230, 118, 0.03) 0%, transparent 40%),
                               radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.03) 0%, transparent 40%);
             color: var(--text-main);
             min-height: 100vh;
             padding: 40px 20px;
         }
         .container {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
-            animation: fadeIn 0.8s ease-out;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -40,49 +40,80 @@
             align-items: center;
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 16px 24px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(12px);
+            padding: 16px 28px;
+            border-radius: 18px;
+            margin-bottom: 35px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
-        .nav-links { display: flex; gap: 20px; }
+        .nav-links { display: flex; gap: 24px; }
         nav a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            font-size: 0.92rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 4px 0;
         }
         nav a:hover, nav a.active {
             color: var(--accent);
         }
-        .user-info {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            box-shadow: 0 0 8px var(--accent);
         }
-        .user-info strong { color: var(--text-main); }
-        .user-info a {
+        .user-info {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-badge {
+            background: rgba(0, 230, 118, 0.08);
+            border: 1px solid rgba(0, 230, 118, 0.2);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+        }
+        .logout-btn {
             color: #ff6b6b;
-            margin-left: 8px;
             text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .logout-btn:hover {
+            color: #ff3333;
         }
         h2 {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.2rem;
+            font-weight: 800;
             margin-bottom: 8px;
             background: linear-gradient(135deg, #fff 0%, #a8ffb2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
         }
         .subtitle {
             color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 30px;
+            font-size: 1.05rem;
+            margin-bottom: 35px;
         }
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 25px;
         }
         @media(max-width: 768px) {
             .grid { grid-template-columns: 1fr; }
@@ -90,72 +121,111 @@
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            backdrop-filter: blur(12px);
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            backdrop-filter: blur(16px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .card:hover {
             transform: translateY(-4px);
-            border-color: rgba(46, 204, 113, 0.3);
+            border-color: rgba(0, 230, 118, 0.45);
+            box-shadow: 0 12px 35px rgba(0, 230, 118, 0.08);
+        }
+        .card-header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
         }
         .card h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 12px;
+            font-size: 1.25rem;
+            font-weight: 700;
             color: var(--text-main);
         }
+        .shield-badge {
+            background: rgba(0, 230, 118, 0.08);
+            border: 1px solid rgba(0, 230, 118, 0.2);
+            color: var(--accent);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
         .card p {
-            font-size: 0.88rem;
-            line-height: 1.5;
+            font-size: 0.9rem;
+            line-height: 1.6;
             color: var(--text-muted);
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
         .card ul {
             list-style: none;
-            padding-left: 0;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
         .card ul li {
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-size: 0.92rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .card ul li a {
-            color: var(--accent);
+            color: var(--text-main);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         .card ul li a:hover {
-            text-decoration: underline;
+            color: var(--accent);
         }
         .audit-hint {
-            border-top: 1px solid rgba(46, 204, 113, 0.15);
-            padding-top: 12px;
-            margin-top: 12px;
-            font-size: 0.85rem !important;
-            color: var(--accent) !important;
-            font-weight: 500;
+            border-top: 1px solid rgba(0, 230, 118, 0.15);
+            padding-top: 16px;
+            margin-top: auto;
+            font-size: 0.82rem;
+            color: var(--accent);
+            font-weight: 600;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+        .audit-hint svg {
+            flex-shrink: 0;
+            margin-top: 2px;
         }
         .btn-link {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            background: rgba(46, 204, 113, 0.1);
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(0, 230, 118, 0.08);
             color: var(--accent);
-            border: 1px solid rgba(46, 204, 113, 0.2);
-            border-radius: 8px;
+            border: 1px solid rgba(0, 230, 118, 0.2);
+            border-radius: 10px;
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.88rem;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            align-self: flex-start;
+            margin-bottom: 24px;
         }
         .btn-link:hover {
             background: var(--accent);
-            color: #101613;
-            box-shadow: 0 4px 12px var(--glow);
+            color: #080a0c;
+            box-shadow: 0 4px 15px var(--glow);
         }
     </style>
 </head>
@@ -168,39 +238,86 @@
                 <a href="/feedback">Feedback Hub</a>
             </div>
             <div class="user-info">
-                Logged in as: <strong>{{ session['username'] }}</strong> ({{ session['role'] }}) | <a href="/logout">Logout</a>
+                Logged in as: <strong>{{ session['username'] }}</strong> 
+                <span class="user-badge">{{ session['role'] }}</span>
+                | <a href="/logout" class="logout-btn">Logout</a>
             </div>
         </nav>
         
-        <h2>Secure Control Center</h2>
-        <p class="subtitle">Audited administrative dashboard with built-in validation engines.</p>
+        <h2>Secure Control Console</h2>
+        <p class="subtitle">Protected gateway equipped with dynamic inputs containment and directory boundaries checks.</p>
         
         <div class="grid">
             <div class="card">
-                <h3>Mitigated: IDOR Protection</h3>
-                <p>Private user data is guarded. Attempts to access notes belonging to other profiles return access denial responses.</p>
-                <ul>
-                    {% if session['user_id'] == 1 %}
-                        <li><a href="/view_note?id=1">→ Private Admin Database Backup Notes</a></li>
-                    {% elif session['user_id'] == 2 %}
-                        <li><a href="/view_note?id=2">→ Alice's Personal Notes</a></li>
-                    {% elif session['user_id'] == 3 %}
-                        <li><a href="/view_note?id=3">→ Bob's shopping list</a></li>
-                    {% endif %}
-                </ul>
-                <p class="audit-hint">Remediation: Strict authentication validation mappings enforce object-level authorization.</p>
+                <div>
+                    <div class="card-header-area">
+                        <h3>IDOR Protection</h3>
+                        <span class="shield-badge">
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M2.166 4.9L10 1.154l7.834 3.746A2 2 0 0119 6.653v4.25c0 5.176-3.824 10.29-9 11.622-5.176-1.332-9-6.03-9-11.622v-4.25a2 2 0 011.166-1.753zM10 3.061L3.993 5.938A.2.2 0 003.9 6.134v4.77a11.022 11.022 0 006.1 9.94.2.2 0 00.1-.034.2.2 0 00.1-.034 11.022 11.022 0 006.1-9.94v-4.77a.2.2 0 00-.093-.196L10 3.06z" clip-rule="evenodd"/>
+                            </svg>
+                            Object Shield
+                        </span>
+                    </div>
+                    <p>Dynamic query verification ensures users only resolve records they are explicitly authorized to view.</p>
+                    <ul>
+                        {% if session['user_id'] == 1 %}
+                            <li>
+                                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                                <a href="/view_note?id=1">Private Admin Backup Notes (ID: 1)</a>
+                            </li>
+                        {% elif session['user_id'] == 2 %}
+                            <li>
+                                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                                <a href="/view_note?id=2">Alice's Personal Notes (ID: 2)</a>
+                            </li>
+                        {% elif session['user_id'] == 3 %}
+                            <li>
+                                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                                <a href="/view_note?id=3">Bob's Shopping Notes (ID: 3)</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="audit-hint">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Mitigation: Authorization queries validate user session bounds, returning error templates for illegal parameters.</span>
+                </div>
             </div>
 
             <div class="card">
-                <h3>Mitigated: Path Traversal Block</h3>
-                <p>The download tool restricts paths using secure filename conversions and directory boundary matching checks.</p>
-                <a href="/download?file=sample.txt" class="btn-link">
+                <div>
+                    <div class="card-header-area">
+                        <h3>Path Bounds Protection</h3>
+                        <span class="shield-badge">
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M2.166 4.9L10 1.154l7.834 3.746A2 2 0 0119 6.653v4.25c0 5.176-3.824 10.29-9 11.622-5.176-1.332-9-6.03-9-11.622v-4.25a2 2 0 011.166-1.753zM10 3.061L3.993 5.938A.2.2 0 003.9 6.134v4.77a11.022 11.022 0 006.1 9.94.2.2 0 00.1-.034.2.2 0 00.1-.034 11.022 11.022 0 006.1-9.94v-4.77a.2.2 0 00-.093-.196L10 3.06z" clip-rule="evenodd"/>
+                            </svg>
+                            Directory Shield
+                        </span>
+                    </div>
+                    <p>The download tool restricts paths using secure filename conversions and directory boundary matching checks.</p>
+                    <a href="/download?file=sample.txt" class="btn-link">
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        Download sample.txt
+                    </a>
+                </div>
+                <div class="audit-hint">
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
-                    Download sample.txt
-                </a>
-                <p class="audit-hint">Remediation: Path resolution validates canonical destinations remain under static boundaries.</p>
+                    <span>Mitigation: Strict filename sanitization and canonical prefix validation confinement blocks arbitrary reads outside the static root.</span>
+                </div>
             </div>
         </div>
     </div>

@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Secure Portal</title>
+    <title>Secure Authentication - Admin Node</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0d0e;
-            --card-bg: rgba(16, 22, 19, 0.4);
-            --border-color: rgba(46, 204, 113, 0.15);
+            --bg-color: #080a0c;
+            --card-bg: rgba(16, 24, 20, 0.45);
+            --border-color: rgba(46, 204, 113, 0.25);
             --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --accent: #2ecc71;
-            --accent-hover: #27ae60;
-            --glow: rgba(46, 204, 113, 0.15);
+            --text-muted: #8e9a9d;
+            --accent: #00e676;
+            --accent-hover: #00c853;
+            --glow: rgba(0, 230, 118, 0.15);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.04) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.03) 0%, transparent 40%);
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 230, 118, 0.07) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.04) 0%, transparent 40%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -32,71 +32,95 @@
         .login-box {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            backdrop-filter: blur(16px);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(24px);
+            padding: 45px 40px;
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 230, 118, 0.08);
             max-width: 420px;
             width: 100%;
-            animation: fadeIn 0.8s ease-out;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        .shield-icon {
+            color: var(--accent);
+            display: block;
+            margin: 0 auto 16px auto;
+            text-align: center;
         }
         h2 {
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 24px;
             text-align: center;
             background: linear-gradient(135deg, #fff 0%, #a8ffb2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-muted);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
         }
         .form-group input {
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(16, 22, 19, 0.6);
+            padding: 14px 18px;
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 8px;
+            border-radius: 10px;
             color: var(--text-main);
             font-family: inherit;
             font-size: 0.95rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .form-group input:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 12px var(--glow);
-            background: rgba(16, 22, 19, 0.8);
+            background: rgba(0, 0, 0, 0.5);
         }
         .btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, var(--accent) 0%, #27ae60 100%);
-            color: #fff;
+            background: linear-gradient(135deg, var(--accent) 0%, #00c853 100%);
+            color: #080a0c;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 4px 15px var(--glow);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
-            background: linear-gradient(135deg, var(--accent-hover) 0%, #1e8449 100%);
+            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4);
+            background: linear-gradient(135deg, #22ff8b 0%, var(--accent-hover) 100%);
         }
         .btn:active {
             transform: translateY(0);
@@ -106,15 +130,16 @@
             background-color: rgba(255, 107, 107, 0.08);
             border: 1px solid rgba(255, 107, 107, 0.2);
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 20px;
             font-size: 0.85rem;
             text-align: center;
+            font-weight: 500;
         }
         .back-link {
             display: block;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 24px;
             font-size: 0.85rem;
             color: var(--text-muted);
             text-decoration: none;
@@ -127,22 +152,29 @@
 </head>
 <body>
     <div class="login-box">
-        <h2>Secure Login</h2>
+        <svg class="shield-icon" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+        <h2>Secure Auth Gateway</h2>
+        
         {% if error %}
             <div class="error">{{ error }}</div>
         {% endif %}
+        
         <form method="POST" action="/login">
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required autocomplete="off" placeholder="e.g. admin">
+                <label for="username">User Identity</label>
+                <input type="text" id="username" name="username" required autocomplete="off" placeholder="Username token">
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">Security Password</label>
                 <input type="password" id="password" name="password" required placeholder="••••••••">
             </div>
-            <button type="submit" class="btn">Authenticate</button>
+            <button type="submit" class="btn">
+                Authorize Session
+            </button>
         </form>
-        <a href="/" class="back-link">Back to Home</a>
+        <a href="/" class="back-link">Return to Node Hub</a>
     </div>
 </body>
 </html>
