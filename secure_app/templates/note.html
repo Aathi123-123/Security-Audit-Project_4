@@ -7,19 +7,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #050608;
-            --bg-panel: rgba(20, 20, 20, 0.45);
-            --border-neon: rgba(255, 255, 255, 0.15);
-            --text-main: #ffffff;
-            --text-muted: #8e9a9d;
-            --accent: #ffffff;
+            --bg-dark: #07050a;
+            --bg-panel: rgba(18, 12, 28, 0.45);
+            --border-neon: rgba(168, 85, 247, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-start: #a855f7;
+            --accent-mid: #06b6d4;
+            --accent-end: #ec4899;
+            --glow: rgba(168, 85, 247, 0.2);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Outfit', sans-serif;
             background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
+            background-image: radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 45%),
+                              radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 45%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -33,7 +36,7 @@
             backdrop-filter: blur(24px);
             padding: 45px 40px;
             border-radius: 24px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(168, 85, 247, 0.08);
             max-width: 580px;
             width: 100%;
             animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -47,7 +50,8 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-mid), var(--accent-end));
+            border-radius: 28px 28px 0 0;
         }
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -58,24 +62,24 @@
             font-size: 1.7rem;
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            background: linear-gradient(135deg, #fff 30%, #cbd5e1 70%, #d8b4fe 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.02em;
         }
         .note-body {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 4px solid var(--accent);
+            background: rgba(168, 85, 247, 0.04);
+            border-left: 4px solid var(--accent-mid);
             border-radius: 8px;
             padding: 24px;
             font-family: 'Fira Code', monospace;
             font-size: 0.95rem;
             line-height: 1.6;
             margin-bottom: 20px;
-            color: rgba(255, 255, 255, 0.9);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(243, 244, 246, 0.95);
+            border-top: 1px solid rgba(168, 85, 247, 0.05);
+            border-right: 1px solid rgba(168, 85, 247, 0.05);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.05);
         }
         .owner-details {
             font-size: 0.88rem;
@@ -97,7 +101,7 @@
             transition: color 0.3s ease;
         }
         .back-link:hover {
-            color: var(--accent);
+            color: var(--accent-mid);
         }
     </style>
 </head>

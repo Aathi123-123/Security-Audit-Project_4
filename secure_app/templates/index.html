@@ -7,23 +7,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #050608;
-            --bg-panel: rgba(20, 20, 20, 0.45);
-            --border-neon: rgba(255, 255, 255, 0.15);
-            --border-neon-bright: rgba(255, 255, 255, 0.5);
-            --text-main: #ffffff;
-            --text-muted: #8e9a9d;
-            --accent: #ffffff;
-            --accent-hover: #e2e8f0;
-            --glow: rgba(255, 255, 255, 0.15);
+            --bg-dark: #07050a;
+            --bg-panel: rgba(18, 12, 28, 0.45);
+            --border-neon: rgba(168, 85, 247, 0.25);
+            --border-neon-bright: rgba(6, 182, 212, 0.6);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-start: #a855f7;
+            --accent-mid: #06b6d4;
+            --accent-end: #ec4899;
+            --glow: rgba(168, 85, 247, 0.3);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Outfit', sans-serif;
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -38,7 +40,7 @@
             backdrop-filter: blur(30px);
             padding: 50px;
             border-radius: 28px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 255, 255, 0.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(168, 85, 247, 0.08);
             max-width: 600px;
             width: 100%;
             text-align: center;
@@ -52,7 +54,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-mid), var(--accent-end));
             border-radius: 28px 28px 0 0;
         }
         @keyframes cardEntrance {
@@ -63,14 +65,14 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(168, 85, 247, 0.08);
+            border: 1px solid rgba(168, 85, 247, 0.2);
             padding: 8px 16px;
             border-radius: 30px;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.8rem;
             font-weight: 700;
-            color: var(--accent);
+            color: #d8b4fe;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 28px;
@@ -78,9 +80,9 @@
         .pulse-dot {
             width: 6px;
             height: 6px;
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent);
+            box-shadow: 0 0 10px var(--accent-start);
             animation: pulseGlow 2s infinite;
         }
         @keyframes pulseGlow {
@@ -94,7 +96,7 @@
             font-weight: 700;
             line-height: 1.15;
             margin-bottom: 18px;
-            background: linear-gradient(135deg, #ffffff 30%, #e2e8f0 100%);
+            background: linear-gradient(135deg, #ffffff 30%, #e2e8f0 70%, #d8b4fe 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.03em;
@@ -114,14 +116,14 @@
         }
         .metric-item {
             background: rgba(255, 255, 255, 0.015);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.03);
             border-radius: 16px;
             padding: 16px 20px;
             transition: all 0.3s ease;
         }
         .metric-item:hover {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(168, 85, 247, 0.03);
+            border-color: rgba(168, 85, 247, 0.25);
         }
         .metric-label {
             font-size: 0.78rem;
@@ -140,8 +142,9 @@
             align-items: center;
             gap: 6px;
         }
-        .dot-white {
-            color: var(--accent);
+        .dot-glow {
+            color: var(--accent-mid);
+            text-shadow: 0 0 8px var(--accent-mid);
         }
         .btn-enter {
             display: inline-flex;
@@ -150,22 +153,22 @@
             gap: 10px;
             width: 100%;
             padding: 16px;
-            background: #ffffff;
-            color: #050608;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-mid), var(--accent-end));
+            color: #ffffff;
             text-decoration: none;
             border-radius: 14px;
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
             font-size: 1.05rem;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 20px var(--glow);
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
             border: none;
             cursor: pointer;
         }
         .btn-enter:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
-            background: #f8fafc;
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.5);
+            background: linear-gradient(90deg, #b975ff, #22d3ee, #f472b6);
         }
     </style>
 </head>
@@ -182,7 +185,7 @@
         <div class="metrics-grid">
             <div class="metric-item">
                 <div class="metric-label">Vulnerability Status</div>
-                <div class="metric-value"><span class="dot-white">●</span> 100% Remediated</div>
+                <div class="metric-value"><span class="dot-glow">●</span> 100% Remediated</div>
             </div>
             <div class="metric-item">
                 <div class="metric-label">Access Control</div>
