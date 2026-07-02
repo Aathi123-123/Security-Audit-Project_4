@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Note - Secure Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 40px; }
+        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto; }
+        nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        nav a { margin-right: 15px; color: #2e7d32; text-decoration: none; font-weight: bold; }
+        .note-body { background: #e8f5e9; border-left: 5px solid #2e7d32; padding: 15px; margin-top: 15px; border-radius: 4px; font-family: monospace; }
+        .owner { color: #888; font-size: 14px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/ping">Ping Tool</a>
+            <a href="/feedback">Feedback & Chat</a>
+            <a href="/download?file=sample.txt">Download Sample Template</a>
+        </nav>
+
+        <h2>Internal Note View (ID: {{ id }})</h2>
+        <div class="note-body">
+            <!-- Mitigation: Jinja2 autoescapes content by default when no 'safe' filter is applied -->
+            {{ content }}
+        </div>
+        <div class="owner">
+            Owner of this note: <strong>{{ owner }}</strong>
+        </div>
+        
+        <br>
+        <a href="/dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html>

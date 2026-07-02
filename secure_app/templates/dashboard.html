@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Secure Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 40px; }
+        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; }
+        nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        nav a { margin-right: 15px; color: #2e7d32; text-decoration: none; font-weight: bold; }
+        .user-info { float: right; color: #555; }
+        .card { border: 1px solid #ddd; padding: 15px; border-radius: 4px; margin-bottom: 15px; background: #fafafa; }
+        .success-text { color: #2e7d32; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/ping">Ping Tool</a>
+            <a href="/feedback">Feedback & Chat</a>
+            <a href="/download?file=sample.txt">Download Sample Template</a>
+            <span class="user-info">Logged in as: <strong>{{ session['username'] }}</strong> ({{ session['role'] }}) | <a href="/logout">Logout</a></span>
+        </nav>
+        
+        <h2>Welcome to the Secure Control Dashboard</h2>
+        <p>Use the options above to navigate the internal system utilities.</p>
+        
+        <div class="card">
+            <h3>Quick Links & IDOR Test</h3>
+            <p>Notes assigned to you:</p>
+            <ul>
+                {% if session['user_id'] == 1 %}
+                    <li><a href="/view_note?id=1">View Secret Admin Notes</a> (Note ID: 1)</li>
+                {% elif session['user_id'] == 2 %}
+                    <li><a href="/view_note?id=2">View Alice Diary</a> (Note ID: 2)</li>
+                {% elif session['user_id'] == 3 %}
+                    <li><a href="/view_note?id=3">View Bob Shopping List</a> (Note ID: 3)</li>
+                {% endif %}
+            </ul>
+            <p>You can also try visiting notes that do not belong to you (e.g., if you are Alice, try viewing Note ID 1). You should see an Access Denied message.</p>
+        </div>
+
+        <div class="card">
+            <h3>Download Testing</h3>
+            <p>You can download templates using: <code>/download?file=sample.txt</code></p>
+            <p class="success-text"><strong>Security Enforcement:</strong> Accessing files outside the static directory (such as <code>../secure.db</code> or system files) will return a 403 Forbidden or 400 Bad Request error.</p>
+        </div>
+    </div>
+</body>
+</html>

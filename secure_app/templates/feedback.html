@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Hub - Secure Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 40px; }
+        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; }
+        nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        nav a { margin-right: 15px; color: #2e7d32; text-decoration: none; font-weight: bold; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .btn { padding: 8px 20px; background-color: #2e7d32; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { background-color: #1b5e20; }
+        .reflected-alert { background-color: #d9edf7; border: 1px solid #bce8f1; color: #31708f; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+        .feedback-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
+        .feedback-name { font-weight: bold; color: #333; }
+        .feedback-msg { margin-top: 5px; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/ping">Ping Tool</a>
+            <a href="/feedback">Feedback & Chat</a>
+            <a href="/download?file=sample.txt">Download Sample Template</a>
+        </nav>
+
+        <h2>Feedback & Message Hub</h2>
+
+        <!-- Mitigation: Removed 'safe' filter to let Jinja2 escape reflected inputs automatically -->
+        {% if reflected_msg %}
+            <div class="reflected-alert">
+                <strong>System Notice:</strong> {{ reflected_msg }}
+            </div>
+        {% endif %}
+
+        <div style="margin-bottom: 30px;">
+            <p>Try testing Reflected XSS by adding <code>?msg=&lt;script&gt;alert(1)&lt;/script&gt;</code> to the URL.</p>
+        </div>
+
+        <form method="POST" action="/feedback">
+            <h3>Leave a Feedback Message</h3>
+            <div class="form-group">
+                <label for="name">Name / Department</label>
+                <input type="text" id="name" name="name" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="message">Feedback / Message</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn">Submit Message</button>
+        </form>
+
+        <hr>
+
+        <h3>Stored Messages</h3>
+        <div class="feedback-list">
+            {% if feedbacks %}
+                {% for name, message in feedbacks %}
+                    <div class="feedback-item">
+                        <!-- Mitigation: Removed 'safe' filter to let Jinja2 escape stored database contents automatically -->
+                        <span class="feedback-name">{{ name }}</span> says:
+                        <div class="feedback-msg">{{ message }}</div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No feedback messages yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

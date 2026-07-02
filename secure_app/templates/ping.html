@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Diagnostic - Secure Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 40px; }
+        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; }
+        nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        nav a { margin-right: 15px; color: #2e7d32; text-decoration: none; font-weight: bold; }
+        .user-info { float: right; color: #555; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; }
+        .form-group input { width: 70%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        .btn { padding: 8px 20px; background-color: #2e7d32; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { background-color: #1b5e20; }
+        pre { background-color: #000; color: #0f0; padding: 15px; border-radius: 4px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/ping">Ping Tool</a>
+            <a href="/feedback">Feedback & Chat</a>
+            <a href="/download?file=sample.txt">Download Sample Template</a>
+            <span class="user-info">Logged in as: <strong>{{ session['username'] }}</strong> | <a href="/logout">Logout</a></span>
+        </nav>
+
+        <h2>Network Diagnostics: Ping</h2>
+        <p>Enter an IP address or hostname to verify connectivity from the server. (e.g. <code>127.0.0.1</code>)</p>
+        <p>Note: Input is strictly validated to prevent command injection characters like <code>;</code>, <code>&</code>, <code>|</code>, etc.</p>
+        
+        <form method="POST" action="/ping">
+            <div class="form-group">
+                <label for="target">Target Host / IP</label>
+                <input type="text" id="target" name="target" value="{{ target }}" placeholder="e.g. 127.0.0.1" required autocomplete="off">
+                <button type="submit" class="btn">Execute Ping</button>
+            </div>
+        </form>
+
+        {% if output %}
+            <h3>Diagnostic Output:</h3>
+            <pre>{{ output }}</pre>
+        {% endif %}
+    </div>
+</body>
+</html>
